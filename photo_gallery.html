@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>photo_gallery</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: sans-serif;
+        text-align: center;
+      }
+      .header {
+        text-align: center;
+        font-size: 2.5rem;
+        height: 3rem;
+        background-color: dodgerblue;
+      }
+      .item-container {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px;
+        display: inline-block;
+        box-shadow: 0 0 4px;
+        transition: 0.3s ease;
+      }
+      .item-container:hover {
+        transform: scale(0.95);
+        color: #000;
+      }
+      p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #222;
+      }
+      .sayMore{
+        margin: 2rem;
+        padding: .8rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        border-radius: 10px;
+        letter-spacing: .1rem;
+        transition: .6s ease;
+        background: #000;
+        color: #fff;
+        border: none;
+      }
+      .sayMore:hover{
+        box-shadow: 0 0 5px #222;
+        transform: scale(.95);
+        background: #fff;
+        color: #000;
+      }
+      .sayLess{
+        margin: 2rem;
+        padding: .8rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        border-radius: 10px;
+        letter-spacing: .1rem;
+        transition: .6s ease;
+        background: #000;
+        color: #fff;
+        border: none;
+      }
+      .sayLess:hover{
+        box-shadow: 0 0 5px #222;
+        transform: scale(.95);
+        background: #fff;
+        color: #000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 0. Create the header in HTML
+    1. Loop through the data array
+        For each item in the array...
+        1. Create the HTML
+            1. Create a container div
+            2. Create an img
+            3. Add an src to the img
+            4. Append the img to the container
+            5. Create a p
+            6. Add textContent to the p
+            7. Append the p to the container
+            8. Append the container to the body
+    2. Do some CSS to make it looks nice -->
+
+    <header class="header">My Photo Gallery</header>
+    <button class="sayMore">Say More</button>
+    <button class="sayLess">Say Less</button>
+    <div id="imageContainer"></div>
+    <script>
+      const images = [
+        {
+          image: "https://picsum.photos/id/237/200/200",
+          title: "Dog",
+          creator: "Jim Beam",
+          price: "$9.99",
+        },
+        {
+          image: "https://picsum.photos/id/238/200/200",
+          title: "City",
+          creator: "Jack Daniels",
+          price: "$6.50",
+        },
+        {
+          image: "https://picsum.photos/id/239/200/200",
+          title: "Dandelion",
+          creator: "Johnnie Walker",
+          price: "$19.00",
+        },
+        {
+          image: "https://picsum.photos/id/244/200/200",
+          title: "Pelicans",
+          creator: "John Jameson",
+          price: "$12.50",
+        },
+        {
+          image: "https://picsum.photos/id/248/200/200",
+          title: "Cactus",
+          creator: "Jim Beam",
+          price: "$15.99",
+        },
+        {
+          image: "https://picsum.photos/id/249/200/200",
+          title: "Bridge",
+          creator: "William Grant",
+          price: "$29.99",
+        },
+        {
+          image: "https://picsum.photos/id/250/200/200",
+          title: "Camera",
+          creator: "George Smith",
+          price: "$10.00",
+        },
+        {
+          image: "https://picsum.photos/id/251/200/200",
+          title: "Landscape",
+          creator: "Johnnie Walker",
+          price: "$29.00",
+        },
+        {
+          image: "https://picsum.photos/id/255/200/200",
+          title: "Private Drive",
+          creator: "John Jameson",
+          price: "$19.00",
+        },
+        {
+          image: "https://picsum.photos/id/256/200/200",
+          title: "Snowy Mountains",
+          creator: "William Grant",
+          price: "$19.99",
+        },
+        {
+          image: "https://picsum.photos/id/257/200/200",
+          title: "Canal",
+          creator: "Jim Beam",
+          price: "$19.99",
+        },
+        {
+          image: "https://picsum.photos/id/258/200/200",
+          title: "Birds",
+          creator: "Johnnie Walker",
+          price: "$24.00",
+        },
+        {
+          image: "https://picsum.photos/id/259/200/200",
+          title: "Waterfront",
+          creator: "George Smith",
+          price: "$15.00",
+        },
+        {
+          image: "https://picsum.photos/id/261/200/200",
+          title: "Dune",
+          creator: "John Jameson",
+          price: "$7.50",
+        },
+        {
+          image: "https://picsum.photos/id/274/200/200",
+          title: "City Night",
+          creator: "Jim Beam",
+          price: "$14.99",
+        },
+      ];
+
+      let startIndex = 0;
+      const NUM_TO_SHOW = 3;
+
+      function sayMore() {
+        const imageContainer = document.getElementById("imageContainer");
+
+        for (let i = startIndex; i < startIndex + NUM_TO_SHOW; i++) {
+          const item = images[i];
+
+          const container = document.createElement("div");
+          container.classList.add("item-container");
+
+          const img = document.createElement("img");
+          img.src = item.image;
+
+          const p = document.createElement("p");
+          p.textContent = item.title;
+
+          container.appendChild(img);
+          container.appendChild(p);
+          document.body.appendChild(container);
+        }
+
+        startIndex += NUM_TO_SHOW;
+      }
+      const button = document.querySelector('.sayMore');
+      button.onclick = sayMore;
+      //   button.addEventListener('click', sayMore);
+      sayMore();
+
+      function sayLess(){
+        const lessButton = document.querySelector('.sayLess');
+        lessButton.addEventListener('click', sayLess);
+      }
+    </script>
+  </body>
+</html>
